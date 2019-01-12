@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>IPL Dataset Projects</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" integrity="sha384-PmY9l28YgO4JwMKbTvgaS7XNZJ30MK9FAZjjzXtlqyZCqBY6X6bXIkM++IkyinN+" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+        <script src = "https://code.highcharts.com/highcharts.js"></script>
+        <style>
+            #container{
+            width: 950px;
+            height: 500px;
+            margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>IPL Dataset Project, Task: 1</h1>
+            <div id="container"></div>
+        </div>
+        <script>
+            seasons = JSON.parse('{{ seasons }}');
+            counts = JSON.parse('{{ counts }}');
+            objArr = [];
+            len = seasons.length;
+            for(var i=0; i<len; i++){
+              var dict = {"name": seasons[i], "y": counts[i]};
+              objArr.push(dict);
+            }
+            
+            Highcharts.chart('container', {
+            chart: {type: 'column'},
+            title: {text: 'Plot the number of matches played per year of all the years in IPL'},
+            xAxis: {type: 'category'},
+            yAxis: {title: {text: 'Total number of matches'}},
+            legend: {enabled: false},
+            plotOptions: {series: {borderWidth: 0, dataLabels: {enabled: true, format: '{point.y}'}}},
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> of total<br/>'
+            },
+            "series": [{"name": "Matches played in IPL", "colorByPoint": true, "data": objArr}]
+            });
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js" integrity="sha384-vhJnz1OVIdLktyixHY4Uk3OHEwdQqPppqYR8+5mjsauETgLOcEynD9oPHhhz18Nw" crossorigin="anonymous"></script>
+    </body>
+</html>
